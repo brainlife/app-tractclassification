@@ -1,8 +1,9 @@
-rm dwi_data*
 rm products.json
 rm sca-tractclass*
 rm finished
 rm jobid
+rm -rf tracts
+rm output.mat
 #rm sca-service-life.*
 #rm finished
 #rm jobid*

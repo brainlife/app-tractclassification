@@ -25,9 +25,22 @@ fg = fgExtract(fg, w > 0, 'keep');
 
 % Classify the major tracts from all the fascicles
 % Dependency "AFQ" use this repository: https://github.com/francopestilli/afq
+disp('running afq..........')
 [fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg);
-fascicles = fg2Array(fg_classified);
+tracts = fg2Array(fg_classified);
 clear fg
 
+mkdir('tracts');
+
+% Make colors for the tracts
+cm = parula(length(tracts));
+for it = 1:length(tracts)
+   tract.name   = tracts(it).name;
+   tract.color  = cm(it,:);
+   tract.coords = tracts(it).fibers;
+   savejson('', tract, fullfile('tracts',sprintf('%i.json',it)));
+   clear tract
+end
+
 % Save the results to disl
-save('output_file_name.mat','fg_classified','classification','fascicles','-v7.3');        
+save('output.mat','fg_classified','classification','-v7.3');        

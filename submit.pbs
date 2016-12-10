@@ -6,6 +6,9 @@
 cd $PBS_O_WORKDIR
 
 module load matlab
+module load spm
+
+rm -rf tracts
 
 export MATLABPATH=$MATLABPATH:$SCA_SERVICE_DIR
 matlab -nodisplay -nosplash -r main
