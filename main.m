@@ -4,7 +4,7 @@ disp('loading paths')
 addpath(genpath('/N/u/hayashis/BigRed2/git/encode'))
 addpath(genpath('/N/u/hayashis/BigRed2/git/vistasoft'))
 addpath(genpath('/N/u/hayashis/BigRed2/git/jsonlab'))
-addpath(genpath('/N/u/hayashis/BigRed2/git/afq'))
+addpath(genpath('/N/u/hayashis/BigRed2/git/afq-master'))
 
 % load my own config.json
 config = loadjson('config.json');
@@ -42,5 +42,5 @@ for it = 1:length(tracts)
    clear tract
 end
 
-% Save the results to disl
+% Save the results to disk
 save('output.mat','fg_classified','classification','-v7.3');        

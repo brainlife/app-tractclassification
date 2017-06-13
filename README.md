@@ -1,5 +1,5 @@
 # sca-service-tractclassification
-Classify major human white matter tracts
+Classify major human white matter tracts using AFQ
 
  
  
