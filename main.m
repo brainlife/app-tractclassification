@@ -35,7 +35,8 @@ fg = fgExtract(fg, w > 0, 'keep');
 % Classify the major tracts from all the fascicles
 % Dependency "AFQ" use this repository: https://github.com/francopestilli/afq
 disp('running afq..........')
-[fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg);
+% [fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg);
+[fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg, [], [], false);
 tracts = fg2Array(fg_classified);
 clear fg
 
