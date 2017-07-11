@@ -17,4 +17,11 @@ if [ $? -eq 0 ]; then
     echo '{}' > products.json
 fi
 
-echo 0 > finished
+if [ -s output.mat ];
+then
+	echo 0 > finished
+else
+	echo "output missing"
+	echo 1 > finished
+	exit 1
+fi
