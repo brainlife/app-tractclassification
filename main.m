@@ -23,20 +23,22 @@ load(config.fe);
 
 % Extract the fascicle weights from the fe structure
 % Dependency "encode".
-w = feGet(fe,'fiber weights');
+%w = feGet(fe,'fiber weights');
 
 % Extract the fascicles
 fg = feGet(fe,'fibers acpc');        
 
 % Eliminte the fascicles with non-zero entries
 % Dependency "vistasoft"
-fg = fgExtract(fg, w > 0, 'keep');
+%fg = fgExtract(fg, w > 0, 'keep');
 
 % Classify the major tracts from all the fascicles
 % Dependency "AFQ" use this repository: https://github.com/francopestilli/afq
 disp('running afq..........')
 % [fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg);
 [fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg, [], [], false);
+invalidIndicies=find(fe.life.fit.weights>0);
+classification.index(invalidIndicies)=0;
 tracts = fg2Array(fg_classified);
 clear fg
 
