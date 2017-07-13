@@ -65,8 +65,8 @@ for i = 1:length(fg_classified)
     tract_info{i,2} = length(fg_classified(i).fibers);
 end
 
-table = cell2table(table);
-table.Properties.VariableNames = {'Tracts', 'FiberCount'};
+T = cell2table(tract_info);
+T.Properties.VariableNames = {'Tracts', 'FiberCount'};
 
-writetable( table, 'output_table.txt')
+writetable(T,'output_table.txt')
     
