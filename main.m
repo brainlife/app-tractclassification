@@ -36,7 +36,7 @@ fg = fgExtract(fg, w > 0, 'keep');
 % Dependency "AFQ" use this repository: https://github.com/francopestilli/afq
 disp('running afq..........')
 % [fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg);
-[fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg, [], [], false);
+[fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg, [], [], true);
 %if removing 0 weighted fibers after AFQ:
 %invalidIndicies=find(fe.life.fit.weights==0);
 %classification.index(invalidIndicies)=0;
