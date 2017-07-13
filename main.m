@@ -68,5 +68,5 @@ end
 T = cell2table(tract_info);
 T.Properties.VariableNames = {'Tracts', 'FiberCount'};
 
-writetable(T,'output_table.txt')
+writetable(T,'output_fibercounts.txt')
     
