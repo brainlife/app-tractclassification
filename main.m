@@ -56,3 +56,17 @@ end
 
 % Save the results to disk
 save('output.mat','fg_classified','classification','-v7.3');        
+
+% saving text file with number of fibers per tracts
+tract_info = cell(length(fg_classified), 2);
+
+for i = 1:length(fg_classified)
+    tract_info{i,1} = fg_classified(i).name;
+    tract_info{i,2} = length(fg_classified(i).fibers);
+end
+
+table = cell2table(table);
+table.Properties.VariableNames = {'Tracts', 'FiberCount'};
+
+writetable( table, 'output_table.txt')
+    
