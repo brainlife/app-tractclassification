@@ -3,7 +3,7 @@
 #PBS -N sca-tractclass
 #PBS -V
 
-cd $PBS_O_WORKDIR
+[ $PBS_O_WORKDIR ] && cd $PBS_O_WORKDIR
 
 module load matlab
 module load spm
@@ -12,11 +12,6 @@ rm -rf tracts
 
 export MATLABPATH=$MATLABPATH:$SCA_SERVICE_DIR
 matlab -nodisplay -nosplash -r main
-if [ $? -eq 0 ]; then
-    #fake products.json for now..
-    echo '{}' > products.json
-fi
-
 if [ -s output.mat ];
 then
 	echo 0 > finished
