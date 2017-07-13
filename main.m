@@ -37,7 +37,7 @@ fg = feGet(fe,'fibers acpc');
 disp('running afq..........')
 % [fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg);
 [fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg, [], [], false);
-invalidIndicies=find(fe.life.fit.weights>0);
+invalidIndicies=find(fe.life.fit.weights=0);
 classification.index(invalidIndicies)=0;
 tracts = fg2Array(fg_classified);
 clear fg
