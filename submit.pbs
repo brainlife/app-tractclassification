@@ -10,7 +10,7 @@ module load spm
 
 rm -rf tracts
 
-export MATLABPATH=$MATLABPATH:$SCA_SERVICE_DIR
+export MATLABPATH=$MATLABPATH:$SERVICE_DIR
 matlab -nodisplay -nosplash -r main
 if [ -s output.mat ];
 then
