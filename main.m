@@ -46,11 +46,7 @@ disp('running afq..........')
 [fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg, [], [], config.useinterhemisphericsplit);
 %if removing 0 weighted fibers after AFQ:
 
-switch config.remove_zero_weighted_fibers
-    case 'before'
-        tracts = fg2Array(fg_classified);
-        clear fg
-    case 'after'
+if strcmp(config.remove_zero_weighted_fibers, 'after')
         invalidIndicies=find(fe.life.fit.weights==0);
         classification.index(invalidIndicies)=0;    
         for itracts=1:length(classification.names)
@@ -59,9 +55,11 @@ switch config.remove_zero_weighted_fibers
             %tractStruc(itracts).fg = dtiNewFiberGroup(tractStruc(itracts).name);
             %tractStruc(itracts).fg.fibers=fg.fibers(classification.index==itracts);
         end
-        tracts = fg2Array(fg_classified);
-        clear fg
 end
+
+tracts = fg2Array(fg_classified);
+clear fg
+
 
 
 mkdir('tracts');
