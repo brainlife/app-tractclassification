@@ -1,18 +1,18 @@
 function [] = main()
 
 switch getenv('ENV')
-case 'IUHPC'
-	disp('loading paths for IUHPC')
-	addpath(genpath('/N/u/hayashis/BigRed2/git/encode'))
-	addpath(genpath('/N/u/hayashis/BigRed2/git/vistasoft'))
-	addpath(genpath('/N/u/hayashis/BigRed2/git/jsonlab'))
-	addpath(genpath('/N/u/hayashis/BigRed2/git/afq-master'))
-case 'VM'
-	disp('loading paths for Jetstream VM')
-	addpath(genpath('/usr/local/encode'))
-	addpath(genpath('/usr/local/vistasoft'))
-	addpath(genpath('/usr/local/jsonlab'))
-	addpath(genpath('/usr/local/afq-master'))
+    case 'IUHPC'
+        disp('loading paths for IUHPC')
+        addpath(genpath('/N/u/hayashis/BigRed2/git/encode'))
+        addpath(genpath('/N/u/hayashis/BigRed2/git/vistasoft'))
+        addpath(genpath('/N/u/hayashis/BigRed2/git/jsonlab'))
+        addpath(genpath('/N/u/hayashis/BigRed2/git/afq-master'))
+    case 'VM'
+        disp('loading paths for Jetstream VM')
+        addpath(genpath('/usr/local/encode'))
+        addpath(genpath('/usr/local/vistasoft'))
+        addpath(genpath('/usr/local/jsonlab'))
+        addpath(genpath('/usr/local/afq-master'))
 end
 
 % load my own config.json
@@ -21,27 +21,48 @@ config = loadjson('config.json');
 % Load an FE strcuture created by the sca-service-life
 load(config.fe);
 
-% Extract the fascicle weights from the fe structure
-% Dependency "encode".
-w = feGet(fe,'fiber weights');
+switch config.remove_zero_weighted_fibers
+%if strcmp(config.remove_zero_weighted_fibers, 'before')
+    case 'before'
+        % Extract the fascicle weights from the fe structure
+        % Dependency "encode".
+        w = feGet(fe,'fiber weights');
 
-% Extract the fascicles
-fg = feGet(fe,'fibers acpc');        
+        % Extract the fascicles
+        fg = feGet(fe,'fibers acpc');        
 
-% Eliminte the fascicles with non-zero entries
-% Dependency "vistasoft"
-fg = fgExtract(fg, w > 0, 'keep');
+        % Eliminte the fascicles with non-zero entries
+        % Dependency "vistasoft"
+        fg = fgExtract(fg, w > 0, 'keep');
+
+    case 'after'
+        fg = feGet(fe,'fibers acpc');     
+end
 
 % Classify the major tracts from all the fascicles
 % Dependency "AFQ" use this repository: https://github.com/francopestilli/afq
 disp('running afq..........')
 % [fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg);
-[fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg, [], [], false);
+[fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg, [], [], config.useinterhemisphericsplit);
 %if removing 0 weighted fibers after AFQ:
-%invalidIndicies=find(fe.life.fit.weights==0);
-%classification.index(invalidIndicies)=0;
-tracts = fg2Array(fg_classified);
-clear fg
+
+switch config.remove_zero_weighted_fibers
+    case 'before'
+        tracts = fg2Array(fg_classified);
+        clear fg
+    case 'after'
+        invalidIndicies=find(fe.life.fit.weights==0);
+        classification.index(invalidIndicies)=0;    
+        for itracts=1:length(classification.names)
+            fg_classified(itracts).fibers = fg.fibers(classification.index==itracts);
+            %tractStruc(itracts).name=classification.names{itracts};
+            %tractStruc(itracts).fg = dtiNewFiberGroup(tractStruc(itracts).name);
+            %tractStruc(itracts).fg.fibers=fg.fibers(classification.index==itracts);
+        end
+        tracts = fg2Array(fg_classified);
+        clear fg
+end
+
 
 mkdir('tracts');
 
@@ -70,4 +91,4 @@ T = cell2table(tract_info);
 T.Properties.VariableNames = {'Tracts', 'FiberCount'};
 
 writetable(T,'output_fibercounts.txt')
-    
+
