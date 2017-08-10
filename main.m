@@ -21,22 +21,17 @@ config = loadjson('config.json');
 % Load an FE strcuture created by the sca-service-life
 load(config.fe);
 
-switch config.remove_zero_weighted_fibers
-%if strcmp(config.remove_zero_weighted_fibers, 'before')
-    case 'before'
+% Extract the fascicles
+fg = feGet(fe,'fibers acpc');
+
+if strcmp(config.remove_zero_weighted_fibers, 'before')
         % Extract the fascicle weights from the fe structure
         % Dependency "encode".
         w = feGet(fe,'fiber weights');
-
-        % Extract the fascicles
-        fg = feGet(fe,'fibers acpc');        
-
-        % Eliminte the fascicles with non-zero entries
+        
+        % Eliminate the fascicles with non-zero entries
         % Dependency "vistasoft"
         fg = fgExtract(fg, w > 0, 'keep');
-
-    case 'after'
-        fg = feGet(fe,'fibers acpc');     
 end
 
 % Classify the major tracts from all the fascicles
