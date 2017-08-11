@@ -36,9 +36,7 @@ end
 
 % Classify the major tracts from all the fascicles
 % Dependency "AFQ" use this repository: https://github.com/francopestilli/afq
-disp('running afq..........')
-% [fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg);
-[fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg, [], [], config.useinterhemisphericsplit);
+[fg_classified,~,classification]= AFQ_SegmentFiberGroups(fullfile(config.dti, 'dt6.mat'), fg, [], [], config.useinterhemisphericsplit);
 %if removing 0 weighted fibers after AFQ:
 
 if strcmp(config.remove_zero_weighted_fibers, 'after')
@@ -46,16 +44,11 @@ if strcmp(config.remove_zero_weighted_fibers, 'after')
         classification.index(invalidIndicies)=0;    
         for itracts=1:length(classification.names)
             fg_classified(itracts).fibers = fg.fibers(classification.index==itracts);
-            %tractStruc(itracts).name=classification.names{itracts};
-            %tractStruc(itracts).fg = dtiNewFiberGroup(tractStruc(itracts).name);
-            %tractStruc(itracts).fg.fibers=fg.fibers(classification.index==itracts);
         end
 end
 
 tracts = fg2Array(fg_classified);
 clear fg
-
-
 
 mkdir('tracts');
 

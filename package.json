@@ -1,5 +1,5 @@
 {
-  "name": "sca-service-tractclassification",
+  "name": "app-tractclassification",
   "version": "1.0.0",
   "description": "run tractclassification / faq",
   "directories": {
@@ -13,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/brain-life/sca-service-tractclassification"
+    "url": "https://github.com/brain-life/app-tractclassification"
   },
   "author": "Soichi Hayashi <hayashis@iu.edu>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/brain-life/sca-service-tractclassification/issues"
+    "url": "https://github.com/brain-life/app-tractclassification/issues"
   },
-  "homepage": "https://github.com/brain-life/sca-service-tractclassification"
+  "homepage": "https://github.com/brain-life/app-tractclassification"
 }
