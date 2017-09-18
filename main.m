@@ -58,9 +58,14 @@ for it = 1:length(tracts)
    tract.name   = tracts(it).name;
    tract.color  = cm(it,:);
    tract.coords = tracts(it).fibers;
+   all_tracts(it).name = tracts(it).name;
+   all_tracts(it).color = cm(it,:);
    savejson('', tract, fullfile('tracts',sprintf('%i.json',it)));
+   all_tracts(it).filename = sprintf('%i.json',it);
    clear tract
 end
+
+savejson('', all_tracts, fullfile('tracts/tracts.json'));
 
 % Save the results to disk
 save('output.mat','fg_classified','classification','-v7.3');        
