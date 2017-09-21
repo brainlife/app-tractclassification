@@ -2,6 +2,8 @@
 #PBS -l nodes=1:ppn=16:dc2,walltime=4:00:00
 #PBS -N tractclassification
 #PBS -V
+#PBS -o stdout.$PBS_JOBID.log
+#PBS -e stderr.$PBS_JOBID.log
 
 [ $PBS_O_WORKDIR ] && cd $PBS_O_WORKDIR
 
@@ -10,6 +12,7 @@ module load spm
 
 rm -rf tracts
 
+echo "starting matlab"
 export MATLABPATH=$MATLABPATH:$SERVICE_DIR
 matlab -nodisplay -nosplash -r main
 if [ -s output.mat ];
