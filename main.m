@@ -3,10 +3,10 @@ function [] = main()
 switch getenv('ENV')
     case 'IUHPC'
         disp('loading paths for IUHPC')
-        addpath(genpath('/N/u/hayashis/BigRed2/git/encode'))
-        addpath(genpath('/N/u/hayashis/BigRed2/git/vistasoft'))
-        addpath(genpath('/N/u/hayashis/BigRed2/git/jsonlab'))
-        addpath(genpath('/N/u/hayashis/BigRed2/git/afq-master'))
+        addpath(genpath('/N/u/brlife/git/encode'))
+        addpath(genpath('/N/u/brlife/git/vistasoft'))
+        addpath(genpath('/N/u/brlife/git/jsonlab'))
+        addpath(genpath('/N/u/brlife/git/afq'))
     case 'VM'
         disp('loading paths for Jetstream VM')
         addpath(genpath('/usr/local/encode'))
@@ -36,7 +36,7 @@ end
 
 % Classify the major tracts from all the fascicles
 % Dependency "AFQ" use this repository: https://github.com/francopestilli/afq
-[fg_classified,~,classification]= AFQ_SegmentFiberGroups(config.dt6, fg, [], [], config.useinterhemisphericsplit);
+[fg_classified,~,classification]= AFQ_SegmentFiberGroups(fullfile(config.dtiinit, 'dti/dt6.mat'), fg, [], [], config.useinterhemisphericsplit);
 %if removing 0 weighted fibers after AFQ:
 
 if strcmp(config.remove_zero_weighted_fibers, 'after')
