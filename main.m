@@ -68,7 +68,7 @@ end
 savejson('', all_tracts, fullfile('tracts/tracts.json'));
 
 % Save the results to disk
-save('output.mat','fg_classified','classification','-v7.3');        
+save('output.mat','fg_classified','classification');
 
 % saving text file with number of fibers per tracts
 tract_info = cell(length(fg_classified), 2);
