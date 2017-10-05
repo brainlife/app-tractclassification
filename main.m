@@ -73,10 +73,21 @@ save('output.mat','fg_classified','classification');
 % saving text file with number of fibers per tracts
 tract_info = cell(length(fg_classified), 2);
 
+possible_error = 0;
 for i = 1:length(fg_classified)
     tract_info{i,1} = fg_classified(i).name;
     tract_info{i,2} = length(fg_classified(i).fibers);
+    if length(fg_classified(i).fibers) < 20
+        possible_error=1;
+    end
 end
+
+if possible_error==1
+    results.quality_check = 'ERROR: Some tracts have less than 20 streamlines. Check quality of data!'
+else
+    results.quality_check = 'Data should be fine, but please view to double check'
+end
+savejson('', results, 'product.json');
 
 T = cell2table(tract_info);
 T.Properties.VariableNames = {'Tracts', 'FiberCount'};
