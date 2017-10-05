@@ -3,10 +3,10 @@ function [] = main()
 switch getenv('ENV')
     case 'IUHPC'
         disp('loading paths for IUHPC')
-        addpath(genpath('/N/u/hayashis/BigRed2/git/encode'))
-        addpath(genpath('/N/u/hayashis/BigRed2/git/vistasoft'))
-        addpath(genpath('/N/u/hayashis/BigRed2/git/jsonlab'))
-        addpath(genpath('/N/u/hayashis/BigRed2/git/afq-master'))
+        addpath(genpath('/N/u/brlife/git/encode'))
+        addpath(genpath('/N/u/brlife/git/vistasoft'))
+        addpath(genpath('/N/u/brlife/git/jsonlab'))
+        addpath(genpath('/N/u/brlife/git/afq'))
     case 'VM'
         disp('loading paths for Jetstream VM')
         addpath(genpath('/usr/local/encode'))
@@ -36,7 +36,7 @@ end
 
 % Classify the major tracts from all the fascicles
 % Dependency "AFQ" use this repository: https://github.com/francopestilli/afq
-[fg_classified,~,classification]= AFQ_SegmentFiberGroups(fullfile(config.dti, 'dt6.mat'), fg, [], [], config.useinterhemisphericsplit);
+[fg_classified,~,classification]= AFQ_SegmentFiberGroups(fullfile(config.dtiinit, 'dti/dt6.mat'), fg, [], [], config.useinterhemisphericsplit);
 %if removing 0 weighted fibers after AFQ:
 
 if strcmp(config.remove_zero_weighted_fibers, 'after')
@@ -68,15 +68,26 @@ end
 savejson('', all_tracts, fullfile('tracts/tracts.json'));
 
 % Save the results to disk
-save('output.mat','fg_classified','classification','-v7.3');        
+save('output.mat','fg_classified','classification');
 
 % saving text file with number of fibers per tracts
 tract_info = cell(length(fg_classified), 2);
 
+possible_error = 0;
 for i = 1:length(fg_classified)
     tract_info{i,1} = fg_classified(i).name;
     tract_info{i,2} = length(fg_classified(i).fibers);
+    if length(fg_classified(i).fibers) < 20
+        possible_error=1;
+    end
 end
+
+if possible_error==1
+    results.quality_check = 'ERROR: Some tracts have less than 20 streamlines. Check quality of data!'
+else
+    results.quality_check = 'Data should be fine, but please view to double check'
+end
+savejson('', results, 'product.json');
 
 T = cell2table(tract_info);
 T.Properties.VariableNames = {'Tracts', 'FiberCount'};

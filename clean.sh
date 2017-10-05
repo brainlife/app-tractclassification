@@ -1,5 +1,5 @@
-rm products.json
-rm tractclassification
+rm product.json
+rm tractclassification.*
 rm finished
 rm jobid
 rm -rf tracts
