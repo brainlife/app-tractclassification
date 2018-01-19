@@ -1,6 +1,0 @@
-{ 
-"fe": "/N/u/hayashis/Karst/testdata/108323/life/output_fe.mat",
-"dtiinit": "/N/u/hayashis/Karst/testdata/108323/dtiinit/.",
-"remove_zero_weighted_fibers": "before",
-"useinterhemisphericsplit": false
-}
