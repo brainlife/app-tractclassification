@@ -7,7 +7,7 @@
 
 rm -f finished
 
-which module && module load singularity
+module load singularity 2> /dev/null
 
 #module load matlab
 #module load spm
