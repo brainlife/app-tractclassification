@@ -1,21 +1,29 @@
 #!/bin/bash
-
-#make sure jq is installed on $SCA_SERVICE_DIR (used by status.sh to analyze progress)
-#if [ ! -f $SCA_SERVICE_DIR/jq ];
-#then
-#        echo "installing jq"
-#        wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 -O $SCA_SERVICE_DIR/jq
-#        chmod +x $SCA_SERVICE_DIR/jq
-#fi
-
-#mainly to debug locally
-if [ -z $WORKFLOW_DIR ]; then export WORKFLOW_DIR=`pwd`; fi
-if [ -z $TASK_DIR ]; then export TASK_DIR=`pwd`; fi
-if [ -z $SERVICE_DIR ]; then export SERVICE_DIR=`pwd`; fi
+#PBS -l nodes=1:ppn=16:dc2,walltime=4:00:00
+#PBS -N tractclassification
+#PBS -V
+#PBS -o stdout.$PBS_JOBID.log
+#PBS -e stderr.$PBS_JOBID.log
 
 rm -f finished
 
-qsub $SERVICE_DIR/submit.pbs > jobid
-#jobid=`qsub -q preempt SERVICE_DIR/submit.pbs`
-#echo $jobid > jobid
+which module && module load singularity
+
+#module load matlab
+#module load spm
+
+rm -rf tracts
+
+echo "starting matlab"
+export MATLABPATH=$MATLABPATH:$SERVICE_DIR
+matlab -nodisplay -nosplash -r main
+if [ -s output.mat ];
+then
+	echo 0 > finished
+else
+	echo "output missing"
+	echo 1 > finished
+	exit 1
+fi
+
 
