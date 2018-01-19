@@ -15,8 +15,12 @@ which module && module load singularity
 rm -rf tracts
 
 echo "starting matlab"
-export MATLABPATH=$MATLABPATH:$SERVICE_DIR
-matlab -nodisplay -nosplash -r main
+#export MATLABPATH=$MATLABPATH:$SERVICE_DIR
+#matlab -nodisplay -nosplash -r main
+
+singularity exec -e docker://brainlife/afqclassification
+
+
 if [ -s output.mat ];
 then
 	echo 0 > finished
