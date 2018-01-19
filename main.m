@@ -15,6 +15,8 @@ function [] = main()
 %         addpath(genpath('/usr/local/afq-master'))
 % end
 
+%# function sptensor
+
 % load my own config.json
 config = loadjson('config.json');
 
