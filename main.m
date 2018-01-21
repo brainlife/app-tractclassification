@@ -16,7 +16,7 @@ function [] = main()
 % end
 
 %# function sptensor
-
+addpath(genpath('/N/soft/rhel6/spm/8'))
 % load my own config.json
 config = loadjson('config.json');
 
