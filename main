@@ -10,12 +10,9 @@ module load singularity 2> /dev/null
 echo "starting matlab"
 singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
 
-if [ -s output.mat ];
+if [ ! -s output.mat ];
 then
-	echo 0 > finished
-else
 	echo "output missing"
-	echo 1 > finished
 	exit 1
 fi
 
