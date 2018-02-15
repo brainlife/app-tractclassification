@@ -59,7 +59,11 @@ cm = parula(length(tracts));
 for it = 1:length(tracts)
    tract.name   = tracts(it).name;
    tract.color  = cm(it,:);
-   tract.coords = tracts(it).fibers;
+
+   %pick randomly up to 1000 fibers (pick all if there are less than 1000)
+   fiber_count = min(1000, numel(tracts(it).fibers));
+   tract.coords = tracts(it).fibers(randperm(fiber_count)); 
+
    all_tracts(it).name = tracts(it).name;
    all_tracts(it).color = cm(it,:);
    savejson('', tract, fullfile('tracts',sprintf('%i.json',it)));

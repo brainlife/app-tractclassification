@@ -3,22 +3,12 @@
 #PBS -N tractclassification
 #PBS -V
 
-rm -f finished
+rm -rf tracts
 
 module load singularity 2> /dev/null
 
-#module load matlab
-#module load spm
-
-rm -rf tracts
-
 echo "starting matlab"
-#export MATLABPATH=$MATLABPATH:$SERVICE_DIR
-#matlab -nodisplay -nosplash -r main
-
-singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiledmatlab/main
-#singularity exec -e docker://brainlife/afqclassification
-
+singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
 
 if [ -s output.mat ];
 then
