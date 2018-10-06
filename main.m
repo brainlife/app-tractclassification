@@ -1,39 +1,34 @@
 function [] = main()
-% 
-% switch getenv('ENV')
-%     case 'IUHPC'
-%         disp('loading paths for IUHPC')
-%         addpath(genpath('/N/u/brlife/git/encode'))
-%         addpath(genpath('/N/u/brlife/git/vistasoft'))
-%         addpath(genpath('/N/u/brlife/git/jsonlab'))
-%         addpath(genpath('/N/u/brlife/git/afq'))
-%     case 'VM'
-%         disp('loading paths for Jetstream VM')
-%         addpath(genpath('/usr/local/encode'))
-%         addpath(genpath('/usr/local/vistasoft'))
-%         addpath(genpath('/usr/local/jsonlab'))
-%         addpath(genpath('/usr/local/afq-master'))
-% end
 
+if ~isdeployed
+    disp('adding paths');
+    addpath(genpath('/N/soft/rhel7/spm/8')) %spm needs to be loaded before vistasoft as vistasoft provides anmean that works
+    addpath(genpath('/N/u/brlife/git/encode'))
+    addpath(genpath('/N/u/brlife/git/jsonlab'))
+    addpath(genpath('/N/u/brlife/git/vistasoft'))
+    addpath(genpath('/N/u/brlife/git/afq'))
+end
+
+%instruct mcc to load sptensor
 %# function sptensor
 
-% load my own config.json
 config = loadjson('config.json');
 
-% Load an FE strcuture created by the sca-service-life
-load(config.fe);
-
-% Extract the fascicles
-fg = feGet(fe,'fibers acpc');
+if isfield(config,'fe')
+    disp('Load an FE strcuture created by the app-life');
+    load(config.fe);
+    fg = feGet(fe,'fibers acpc');
+end
 
 if strcmp(config.remove_zero_weighted_fibers, 'before')
-        % Extract the fascicle weights from the fe structure
-        % Dependency "encode".
+        disp('removing fascicles with non-zero entries - before running segmentation')
         w = feGet(fe,'fiber weights');
-        
-        % Eliminate the fascicles with non-zero entries
-        % Dependency "vistasoft"
         fg = fgExtract(fg, w > 0, 'keep');
+end
+
+if isfield(config,'track')
+    disp('Loading track');
+    fg = dtiImportFibersMrtrix(config.track, .5);
 end
 
 % Classify the major tracts from all the fascicles
@@ -42,6 +37,7 @@ end
 %if removing 0 weighted fibers after AFQ:
 
 if strcmp(config.remove_zero_weighted_fibers, 'after')
+        disp('removing fascicles with non-zero entries - after running segmentation')
         invalidIndicies=find(fe.life.fit.weights==0);
         classification.index(invalidIndicies)=0;    
         for itracts=1:length(classification.names)
@@ -160,7 +156,6 @@ bar2.marker.color = 'rgb(204, 204, 204)';
 
 bardata = {bar1, bar2};
 barlayout = struct;
-barlayout.title = 'Number of Fibers';
 barlayout.xaxis = struct;
 barlayout.xaxis.tickfont = struct;
 barlayout.xaxis.tickfont.size = 8;
@@ -169,6 +164,8 @@ barlayout.barmode = 'group';
 barplot = struct;
 barplot.data = bardata;
 barplot.layout = barlayout;
+barplot.type = 'plotly';
+barplot.name = 'Number of Fibers';
 
 T = cell2table(tract_info);
 T.Properties.VariableNames = {'Tracts', 'FiberCount'};
@@ -198,6 +195,7 @@ out = struct;
 out.data = struct;
 out.layout = struct;
 out.type = 'plotly';
+out.name = plotTitle;
 
 out.data.x = values;
 out.data.type = 'box';
