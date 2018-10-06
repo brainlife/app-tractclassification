@@ -18,13 +18,14 @@ if isfield(config,'fe')
     disp('Load an FE strcuture created by the app-life');
     load(config.fe);
     fg = feGet(fe,'fibers acpc');
+
+    if strcmp(config.remove_zero_weighted_fibers, 'before')
+            disp('removing fascicles with non-zero entries - before running segmentation')
+            w = feGet(fe,'fiber weights');
+            fg = fgExtract(fg, w > 0, 'keep');
+    end
 end
 
-if strcmp(config.remove_zero_weighted_fibers, 'before')
-        disp('removing fascicles with non-zero entries - before running segmentation')
-        w = feGet(fe,'fiber weights');
-        fg = fgExtract(fg, w > 0, 'keep');
-end
 
 if isfield(config,'track')
     disp('Loading track');
@@ -36,13 +37,15 @@ end
 [fg_classified,~,classification]= AFQ_SegmentFiberGroups(fullfile(config.dtiinit, 'dti/dt6.mat'), fg, [], [], config.useinterhemisphericsplit);
 %if removing 0 weighted fibers after AFQ:
 
-if strcmp(config.remove_zero_weighted_fibers, 'after')
-        disp('removing fascicles with non-zero entries - after running segmentation')
-        invalidIndicies=find(fe.life.fit.weights==0);
-        classification.index(invalidIndicies)=0;    
-        for itracts=1:length(classification.names)
-            fg_classified(itracts).fibers = fg.fibers(classification.index==itracts);
-        end
+if isfield(config,'fe')
+    if strcmp(config.remove_zero_weighted_fibers, 'after')
+            disp('removing fascicles with non-zero entries - after running segmentation')
+            invalidIndicies=find(fe.life.fit.weights==0);
+            classification.index(invalidIndicies)=0;    
+            for itracts=1:length(classification.names)
+                fg_classified(itracts).fibers = fg.fibers(classification.index==itracts);
+            end
+    end
 end
 
 tracts = fg2Array(fg_classified);
