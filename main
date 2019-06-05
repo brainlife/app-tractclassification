@@ -8,7 +8,8 @@ set -x
 
 rm -rf tracts
 
-singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
+singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a bash -c "cd /N/u/guptaadi/Carbonate/Documents/app-tractclassification && ./compiled/main"
+#singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
 
 if [ ! -s output.mat ];
 then
