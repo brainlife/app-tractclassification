@@ -10,8 +10,12 @@ rm -rf tracts
 
 singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
 
-if [ ! -s output.mat ];
+if [ ! -s classification.mat ];
 then
 	echo "output missing"
 	exit 1
 fi
+
+mkdir -p wmc
+mv classification.mat wmc
+mv tracts wmc
