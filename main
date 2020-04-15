@@ -3,14 +3,14 @@
 #PBS -N tractclassification
 #PBS -V
 
+rm -rf tracts
+rm -rf dtiinit
+
 set -e
 set -x
 
-rm -rf tracts
-
 #need to copy dtiinit input to cwd.. because AFQ tries to write stuff to input
 #https://github.com/yeatmanlab/AFQ/issues/35
-rm -rf dtiinit
 dtiinit_dir=$(jq -r .dtiinit config.json)
 cp -r $dtiinit_dir dtiinit
 chmod -r +w dtiinit
