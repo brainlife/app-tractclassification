@@ -13,6 +13,7 @@ rm -rf tracts
 rm -rf dtiinit
 dtiinit_dir=$(jq -r .dtiinit config.json)
 cp -r $dtiinit_dir dtiinit
+chmod -r +w dtiinit
 
 singularity exec -e -B dtiinit:`realpath $dtiinit_dir` docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
 
