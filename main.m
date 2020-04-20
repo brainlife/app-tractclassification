@@ -34,8 +34,10 @@ end
 
 % Classify the major tracts from all the fascicles
 % Dependency "AFQ" use this repository: https://github.com/francopestilli/afq
-[fg_classified,~,classification]= AFQ_SegmentFiberGroups(fullfile(config.dtiinit, 'dti/dt6.mat'), fg, [], [], config.useinterhemisphericsplit);
+disp('running AFQ_SegmentFiberGroups--------------------')
+[fg_classified,~,classification]= AFQ_SegmentFiberGroups('dtiinit/dti/dt6.mat', fg, [], [], config.useinterhemisphericsplit);
 %if removing 0 weighted fibers after AFQ:
+disp('done running AFQ_SegmentFiberGroup')
 
 if isfield(config,'fe')
     if strcmp(config.remove_zero_weighted_fibers, 'after')
@@ -187,6 +189,8 @@ if possible_error == 1
     product = {barplot, boxplot, message};
 end
 savejson('brainlife', product, 'product.json');
+
+disp('all done')
 
 end
 

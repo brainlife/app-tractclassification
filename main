@@ -8,7 +8,12 @@ set -x
 
 rm -rf tracts
 
-singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
+#need to copy dtiinit input to cwd.. because AFQ tries to write stuff to input
+#https://github.com/yeatmanlab/AFQ/issues/35
+rm -rf dtiinit
+cp -r $(jq -r .dtiinit config.json) dtiinit
+
+singularity exec -e docker://brainlife/mcr:r2019a ./compiled/main
 
 if [ ! -s classification.mat ];
 then

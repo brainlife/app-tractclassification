@@ -1,6 +1,6 @@
 {
-  "dtiinit": "/N/u/hayashis/Karst/testdata/franco/dtiinit",
-  "fe": "/N/u/hayashis/Karst/testdata/franco/life/output_fe.mat",
+  "dtiinit": "testdata/proj-5d786647281b9525d8821011/sub-9003.ses-2/dt-neuro-dtiinit.id-5e98b05efc6925f47c81c2e9",
+  "track": "testdata/proj-5d786647281b9525d8821011/sub-9003.ses-2/dt-neuro-track-tck.tag-ensemble.id-5e991576fc69254f1581ceea/track.tck",
   "useinterhemisphericsplit": false,
   "remove_zero_weighted_fibers": "before"
 }

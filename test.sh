@@ -1,3 +1,1 @@
-docker run -it \
-    -v `pwd`:/output \
-    brainlife/afqclassification
+matlab -nodisplay -nosplash -r main
