@@ -12,10 +12,12 @@ set -x
 #need to copy dtiinit input to cwd.. because AFQ tries to write stuff to input
 #https://github.com/yeatmanlab/AFQ/issues/35
 dtiinit_dir=$(jq -r .dtiinit config.json)
-cp -r $dtiinit_dir dtiinit
-chmod -R +rwx dtiinit
+chmod -R +rwx $dtiinit_dir
 
-singularity exec -e -B dtiinit:`realpath $dtiinit_dir` docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
+#this worked some place, and didn't work on other placde..
+#singularity exec -e -B dtiinit:`realpath $dtiinit_dir` docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
+
+singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
 
 if [ ! -s classification.mat ];
 then
