@@ -3,7 +3,7 @@
 #PBS -N tractclassification
 #PBS -V
 
-rm -rf tracts
+rm -rf wmc
 
 chmod -R +rwx dtiinit
 rm -rf dtiinit
