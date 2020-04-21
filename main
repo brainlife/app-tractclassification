@@ -4,8 +4,6 @@
 #PBS -V
 
 rm -rf tracts
-
-chmod -R +rwx dtiinit
 rm -rf dtiinit
 
 set -e
