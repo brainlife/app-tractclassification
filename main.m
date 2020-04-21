@@ -32,8 +32,8 @@ end
 
 if isfield(config,'track')
     disp('Loading track');
-    %fg = dtiImportFibersMrtrix(config.track, .5);
-    fg = fgRead(config.track)
+    fg = dtiImportFibersMrtrix(config.track, .5)
+    %fg = fgRead(config.track)
 end
 
 % Classify the major tracts from all the fascicles
