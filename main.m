@@ -5,7 +5,10 @@ if ~isdeployed
     addpath(genpath('/N/soft/rhel7/spm/8')) %spm needs to be loaded before vistasoft as vistasoft provides anmean that works
     addpath(genpath('/N/u/brlife/git/encode'))
     addpath(genpath('/N/u/brlife/git/jsonlab'))
-    addpath(genpath('/N/u/brlife/git/vistasoft'))
+
+    %addpath(genpath('/N/u/brlife/git/vistasoft-old'))
+    addpath(genpath('/N/u/hayashis/git/vistasoft'))
+
     addpath(genpath('/N/u/brlife/git/afq'))
 end
 
@@ -29,11 +32,14 @@ end
 
 if isfield(config,'track')
     disp('Loading track');
-    fg = dtiImportFibersMrtrix(config.track, .5);
+    %fg = dtiImportFibersMrtrix(config.track, .5);
+    fg = fgRead(config.track)
 end
 
 % Classify the major tracts from all the fascicles
 % Dependency "AFQ" use this repository: https://github.com/francopestilli/afq
+%disp("fiber sample")
+%celldisp(fg.fibers(1))
 disp('running AFQ_SegmentFiberGroups--------------------')
 [fg_classified,~,classification]= AFQ_SegmentFiberGroups('dtiinit/dti/dt6.mat', fg, [], [], config.useinterhemisphericsplit);
 %if removing 0 weighted fibers after AFQ:

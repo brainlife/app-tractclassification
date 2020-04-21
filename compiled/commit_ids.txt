@@ -11,12 +11,11 @@ Date:   Tue Aug 20 12:20:38 2019 -0400
 
     fix table transpose issue for uniform type tables
 /N/u/hayashis/git/vistasoft
-commit 292d2180ef980a2283ce544528a295c55ae099e5
-Merge: b7aab0a db26c84
+commit fcdea5b8e4eb9d4d600098b0131b8a957a3a5d65
 Author: Soichi Hayashi <hayashis@iu.edu>
-Date:   Mon Apr 20 15:43:01 2020 -0400
+Date:   Tue Apr 21 01:17:36 2020 +0000
 
-    Merge branch 'master' of github.com:soichih/vistasoft
+    updated myCinterp3 so that it can handle half-precision input
 /N/u/brlife/git/afq
 commit a42e1577772d7effa591b39c26acbabcdb69b32c
 Merge: a22bbab c95887f

@@ -22,7 +22,7 @@ addpath(genpath('/N/u/brlife/git/encode'))
 addpath(genpath('/N/u/brlife/git/jsonlab'))
 addpath(genpath('/N/u/hayashis/git/vistasoft'))
 addpath(genpath('/N/u/brlife/git/afq'))
-mcc -m -R -nodisplay -a /N/u/brlife/git/vistasoft/mrAnatomy/mex -d compiled main
+mcc -m -R -nodisplay -a /N/u/hayashis/git/vistasoft/mrAnatomy/mex -d compiled main
 exit
 END
 
