@@ -8,6 +8,11 @@ set -x
 
 rm -rf tracts
 
+#need to copy dtiinit input to cwd.. because AFQ tries to write stuff to input
+#https://github.com/yeatmanlab/AFQ/issues/35
+dtiinit_dir=$(jq -r .dtiinit config.json)
+chmod -R +rwx $dtiinit_dir
+
 singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
 
 if [ ! -s output.mat ];
