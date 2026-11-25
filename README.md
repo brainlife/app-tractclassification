@@ -10,18 +10,18 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="MIT license"></a>
 </p>
 
-> 📍 **This branch, `1.4`, runs 2 brainlife.io Apps** that share the same code:
+> **This branch, `1.4`, runs 2 brainlife.io Apps** that share the same code:
 >
 > - AFQ Tract Classification ([doi:10.25663/brainlife.app.207](https://doi.org/10.25663/brainlife.app.207))
 > - AFQ Tract Classification with LiFE ([doi:10.25663/brainlife.app.206](https://doi.org/10.25663/brainlife.app.206))
 >
 > The other Apps in this repository are listed under **Versions on brainlife.io** below.
 
-## 🧠 At a glance
+## At a glance
 
 <!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
 
-### 🧩 AFQ Tract Classification
+### AFQ Tract Classification
 
 > **Classifies major white matter tracts with AFQ (AFQ_SegmentFiberGroups) from a .tck tractogram and dtiInit output and outputs a white matter classification.**
 
@@ -29,27 +29,27 @@ Imports the tractogram, runs AFQ_SegmentFiberGroups with the dtiInit dt6.mat to 
 
 | | |
 |---|---|
-| 📥 **Inputs** | `neuro/track/tck` · `neuro/dtiinit` |
-| 📤 **Outputs** | `neuro/wmc` |
-| 🐳 **Container** | `brainlife/mcr:r2019a` |
-| ⚙️ **Resources** | 8 CPUs · 58 GB memory · 5 h walltime |
-| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.207](https://doi.org/10.25663/brainlife.app.207) |
+| **Inputs** | `neuro/track/tck` · `neuro/dtiinit` |
+| **Outputs** | `neuro/wmc` |
+| **Container** | `brainlife/mcr:r2019a` |
+| **Resources** | 8 CPUs · 58 GB memory · 5 h walltime |
+| **Run it** | [doi.org/10.25663/brainlife.app.207](https://doi.org/10.25663/brainlife.app.207) |
 
-#### 📥 Inputs
+#### Inputs
 
 | Input | Datatype | Required | Description |
 |---|---|---|---|
 | `track` | `neuro/track/tck` | yes | Whole-brain tractogram (.tck). |
 | `dtiinit` | `neuro/dtiinit` | yes | dtiInit output; its dt6.mat is used by AFQ to segment the fibers. |
 
-#### 📤 Outputs
+#### Outputs
 
 | Output | Datatype | Description |
 |---|---|---|
 | `wmc` | `neuro/wmc` | White matter classification (classification.mat with AFQ tract names and per-streamline index) and tract JSON files. |
 
 <details>
-<summary><b>⚙️ Parameters</b> (1)</summary>
+<summary><b>Parameters</b> (1)</summary>
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
@@ -57,7 +57,7 @@ Imports the tractogram, runs AFQ_SegmentFiberGroups with the dtiInit dt6.mat to 
 
 </details>
 
-### 🧩 AFQ Tract Classification with LiFE
+### AFQ Tract Classification with LiFE
 
 > **Classifies major white matter tracts with AFQ (AFQ_SegmentFiberGroups) from a LiFE-evaluated tractogram and dtiInit output, optionally removing zero-weight LiFE fascicles, and outputs a tract classification.**
 
@@ -65,27 +65,27 @@ This service uses Automated fiber quantification AFQ and fe structure output fro
 
 | | |
 |---|---|
-| 📥 **Inputs** | `neuro/LiFE` · `neuro/dtiinit` |
-| 📤 **Outputs** | `neuro/wmc` |
-| 🐳 **Container** | `brainlife/mcr:r2019a` |
-| ⚙️ **Resources** | 8 CPUs · 58 GB memory · 5 h walltime |
-| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.206](https://doi.org/10.25663/brainlife.app.206) |
+| **Inputs** | `neuro/LiFE` · `neuro/dtiinit` |
+| **Outputs** | `neuro/wmc` |
+| **Container** | `brainlife/mcr:r2019a` |
+| **Resources** | 8 CPUs · 58 GB memory · 5 h walltime |
+| **Run it** | [doi.org/10.25663/brainlife.app.206](https://doi.org/10.25663/brainlife.app.206) |
 
-#### 📥 Inputs
+#### Inputs
 
 | Input | Datatype | Required | Description |
 |---|---|---|---|
 | `fe` | `neuro/LiFE` | yes | LiFE fe structure (.mat) containing the tractogram and fascicle weights. |
 | `dtiinit` | `neuro/dtiinit` | yes | dtiInit output; its dt6.mat is used by AFQ to segment the fibers. |
 
-#### 📤 Outputs
+#### Outputs
 
 | Output | Datatype | Description |
 |---|---|---|
 | `wmc` | `neuro/wmc` | White matter classification (classification.mat with AFQ tract names and per-streamline index) and tract JSON files. |
 
 <details>
-<summary><b>⚙️ Parameters</b> (2)</summary>
+<summary><b>Parameters</b> (2)</summary>
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
@@ -96,7 +96,7 @@ This service uses Automated fiber quantification AFQ and fe structure output fro
 
 <!-- brainlife-app:end -->
 
-## 🏷️ Versions on brainlife.io
+## Versions on brainlife.io
 
 Each version is a separate App on brainlife.io, built from its own branch of this repository. The "with LiFE" Apps take a LiFE `fe` structure instead of a `.tck` tractogram and can drop the streamlines that LiFE gave zero weight.
 
@@ -107,9 +107,9 @@ Each version is a separate App on brainlife.io, built from its own branch of thi
 | AFQ Tract Classification | `.tck` tractogram | [`1.2`](https://github.com/brainlife/app-tractclassification/tree/1.2) | [doi:10.25663/bl.app.13](https://doi.org/10.25663/bl.app.13) | deprecated |
 | AFQ Tract Classification with LiFE | LiFE `fe` | [`1.2`](https://github.com/brainlife/app-tractclassification/tree/1.2) | [doi:10.25663/bl.app.56](https://doi.org/10.25663/bl.app.56) | deprecated |
 
-## 🚀 Running the App
+## Running the App
 
-### ☁️ On brainlife.io
+### On brainlife.io
 
 Open the App at [doi.org/10.25663/brainlife.app.207](https://doi.org/10.25663/brainlife.app.207), choose a `neuro/track/tck` tractogram and the `neuro/dtiinit` output of the same subject (or, for the LiFE version, a `neuro/LiFE` dataset and its `neuro/dtiinit`), set the options and press **Execute**. The classification is archived to your project as a `neuro/wmc` dataset tagged `afq`.
 
@@ -120,7 +120,7 @@ Options:
 
 For more on AFQ see the [AFQ wiki](https://github.com/yeatmanlab/AFQ/wiki).
 
-### 💻 Locally
+### Locally
 
 You need [Singularity/Apptainer](https://apptainer.org/) and [`jq`](https://jqlang.github.io/jq/). `main` runs the compiled MATLAB code (`compiled/main`) in the `brainlife/mcr:r2019a` container, so no MATLAB licence is needed.
 
@@ -145,7 +145,7 @@ You need [Singularity/Apptainer](https://apptainer.org/) and [`jq`](https://jqla
 
 `main` copies the `dtiinit` directory into the working directory first, because AFQ writes into its input ([yeatmanlab/AFQ#35](https://github.com/yeatmanlab/AFQ/issues/35)). To recompile the MATLAB code, see `compile.sh` (MATLAB R2019a with AFQ, vistasoft, encode and jsonlab on the path).
 
-## 📦 Outputs
+## Outputs
 
 ```text
 wmc/
@@ -155,12 +155,12 @@ wmc/
 
 The App also writes `output_fibercounts.txt` (streamline count per tract) and `product.json` (bar and box plots of the counts shown on brainlife.io).
 
-## 🩺 Troubleshooting
+## Troubleshooting
 
 - **`output missing`**: AFQ did not write `classification.mat`. Check the logs, and make sure the tractogram (or LiFE `fe`) and the dtiInit output come from the same subject and space.
 - **`ERROR: Some tracts have less than 20 streamlines. Check quality of data!`**: reported on brainlife.io when any tract has fewer than 20 streamlines; check the tractography and alignment before using those tracts.
 
-## 📚 Citing
+## Citing
 
 > [!TIP]
 > If you use this App in your work, please cite the App, the software it builds on and brainlife.io (below). GitHub's **Cite this repository** button gives the App citation in APA and BibTeX.
@@ -170,14 +170,14 @@ The App also writes `output_fibercounts.txt` (streamline count per tract) and `p
 - Hayashi S, Caron BA, Heinsfeld AS, et al. brainlife.io: a decentralized and open-source cloud platform to support neuroscience research. *Nature Methods* 21:809–813 (2024). [doi:10.1038/s41592-024-02237-2](https://doi.org/10.1038/s41592-024-02237-2)
 - Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. *Scientific Data* 6:69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
 
-## 👥 Authors
+## Authors
 
 - Franco Pestilli (project director)
 - Lindsey Kitchell
 
 **Contributors:** Soichi Hayashi
 
-## 💰 Funding
+## Funding
 
 [![Wellcome-226486/Z/22/Z](https://img.shields.io/badge/Wellcome-226486%2FZ%2F22%2FZ-purple.svg)](https://wellcome.org/)
 [![NIH-NINDS-U24NS140384](https://img.shields.io/badge/NIH_NINDS-U24NS140384-green.svg)](https://reporter.nih.gov/project-details/11261037)
@@ -196,6 +196,6 @@ The App also writes `output_fibercounts.txt` (streamline count per tract) and `p
 
 <sub>brainlife.io is publicly funded, and acknowledging that support helps keep it running. This App was developed with support from Wellcome, the U.S. National Institutes of Health (including the BRAIN Initiative BRAIN CONNECTS program: The Axonal Projectome EXchange, U24NS140384, and the Center for Mesoscale Connectomics, UM1NS132207) and the U.S. National Science Foundation.</sub>
 
-## ⚖️ License
+## License
 
 [MIT](LICENSE). AFQ and vistasoft are distributed under their own licences.
