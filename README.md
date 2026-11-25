@@ -14,26 +14,39 @@
 
 <!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
 
-**Classifies major white matter tracts with AFQ (AFQ_SegmentFiberGroups) from a .tck tractogram and dtiInit output and outputs a white matter classification.**
+> **Classifies major white matter tracts with AFQ (AFQ_SegmentFiberGroups) from a .tck tractogram and dtiInit output and outputs a white matter classification.**
 
 Imports the tractogram, runs AFQ_SegmentFiberGroups with the dtiInit dt6.mat to label the 20 AFQ major tracts, and writes a classification structure (tract names and per-streamline index) with tract JSON files. useinterhemisphericsplit cuts fibers crossing the midsagittal plane below z=-10 to remove CST fibers crossing at the brainstem. Tractogram and dtiInit must be from the same subject and space. For more information about AFQ see https://github.com/yeatmanlab/AFQ/wiki
 
-Run it on brainlife.io: [https://doi.org/10.25663/brainlife.app.207](https://doi.org/10.25663/brainlife.app.207)
+| | |
+|---|---|
+| 📥 **Inputs** | `neuro/track/tck` · `neuro/dtiinit` |
+| 📤 **Outputs** | `neuro/wmc` |
+| 🐳 **Container** | `brainlife/mcr:r2019a` |
+| ⚙️ **Resources** | 8 CPUs · 58 GB memory · 5 h walltime |
+| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.207](https://doi.org/10.25663/brainlife.app.207) |
+
+#### 📥 Inputs
 
 | Input | Datatype | Required | Description |
 |---|---|---|---|
 | `track` | `neuro/track/tck` | yes | Whole-brain tractogram (.tck). |
 | `dtiinit` | `neuro/dtiinit` | yes | dtiInit output; its dt6.mat is used by AFQ to segment the fibers. |
 
+#### 📤 Outputs
+
 | Output | Datatype | Description |
 |---|---|---|
 | `wmc` | `neuro/wmc` | White matter classification (classification.mat with AFQ tract names and per-streamline index) and tract JSON files. |
+
+<details>
+<summary><b>⚙️ Parameters</b> (1)</summary>
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `useinterhemisphericsplit` | boolean | `false` | If true, AFQ cuts fibers crossing between hemispheres with a midsagittal plane below z=-10, removing CST fibers that appear to cross at the brainstem. |
 
-Runtime: container `brainlife/mcr:r2019a`; 8 CPUs; 58 GB memory; 5 h walltime.
+</details>
 
 <!-- brainlife-app:end -->
 
